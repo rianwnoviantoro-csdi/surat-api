@@ -10,6 +10,7 @@ import IncomingMail from "@entities/incoming-mail";
 import IncomingMailRepository from "@repositories/incoming-mail";
 import UserRepository from "@repositories/user";
 import GenerateAgenda from "@utils/agenda";
+import { uploadPDF } from "@utils/cloudinary";
 
 export default class IncomingMailService {
   constructor(
@@ -17,7 +18,11 @@ export default class IncomingMailService {
     private readonly userRepository: UserRepository
   ) {}
 
-  async createMail(userUUID: string, body: NewMailDto): Promise<IncomingMail> {
+  async createMail(
+    userUUID: string,
+    body: NewMailDto,
+    evidence: any
+  ): Promise<IncomingMail | []> {
     const existingUser = await this.userRepository.getUserByUUID(userUUID);
 
     if (!existingUser) throw new ApiError(404, "Account not found.");
@@ -28,6 +33,12 @@ export default class IncomingMailService {
 
     if (lastAgenda) {
       agenda = await GenerateAgenda(lastAgenda.agenda);
+    }
+
+    if (evidence) {
+      const uploadedImage: any = await uploadPDF(evidence, "incoming-mail");
+
+      if (uploadedImage) body.evidence = uploadedImage.secure_url;
     }
 
     const mail = {

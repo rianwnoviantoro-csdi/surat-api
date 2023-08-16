@@ -6,7 +6,6 @@ import { RequestWithUser } from "@middlewares/auth";
 import IncomingMailService from "@services/incoming-mail";
 import { createIncomingMailSchema } from "@validators/incoming-mail";
 import ApiError from "@configs/api-error";
-import { format, parseISO } from "date-fns";
 
 export default class IncomingMailController {
   constructor(private readonly incomingMailService: IncomingMailService) {}
@@ -16,13 +15,20 @@ export default class IncomingMailController {
       const archiverUUID = req.user?.uuid as string;
       const body: NewMailDto = req.body;
 
+      let evidence = null;
+
+      if (req.file) {
+        evidence = req.file;
+      }
+
       await createIncomingMailSchema.validateAsync(body, {
         abortEarly: false,
       });
 
       const result = await this.incomingMailService.createMail(
         archiverUUID,
-        body
+        body,
+        evidence
       );
 
       return res.success(result);

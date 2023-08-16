@@ -6,6 +6,9 @@ export const env = {
   env: process.env.APP_ENV || "development",
   secret: process.env.JWT_SECRET || "s3CrEtk3y",
   refresh: process.env.JWT_REFRESH || "R3frE5H",
+  cloudinaryName: process.env.CLOUDINARY_NAME || "",
+  cloudinaryKey: process.env.CLOUDINARY_KEY || "",
+  cloudinarySecret: process.env.CLOUDINARY_SECRET || "",
 };
 
 export const database = {

@@ -9,7 +9,7 @@ export const createIncomingMailSchema = Joi.object<NewMailDto>({
   regarding: Joi.string().allow(null),
   followUp: Joi.string().allow(null),
   explanation: Joi.string().allow(null),
-  evidence: Joi.string().allow(null),
+  evidence: Joi.any().meta({ swaggerType: "file" }).optional().allow(null),
   attachment: Joi.string().allow(null),
   recipient: Joi.string().allow(null),
   mailingDate: Joi.date().allow(null),
