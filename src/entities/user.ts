@@ -1,7 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 
 import Abstract from "@entities/abstract";
 import Role from "@entities/role";
+import IncomingMail from "@entities/incoming-mail";
 
 export interface IUser {
   id?: number;
@@ -9,6 +10,8 @@ export interface IUser {
   name?: string;
   email?: string;
   password?: string;
+  role?: Role;
+  mails?: IncomingMail[];
   is_active?: boolean;
   created_at?: Date;
   updated_at?: Date;
@@ -28,4 +31,7 @@ export default class User extends Abstract<User> {
   @ManyToOne(() => Role, (role) => role.users)
   @JoinColumn({ name: "role", referencedColumnName: "uuid" })
   role: Role;
+
+  @OneToMany(() => IncomingMail, (incomingMail) => incomingMail.archiver)
+  mails: IncomingMail[];
 }

@@ -14,7 +14,7 @@ export interface IPermission {
 @Entity("permissions")
 export default class Permission extends Abstract<Permission> {
   @Column()
-  name?: string;
+  name: string;
 
   @ManyToMany(() => Role, (role) => role.permissions)
   roles: Role[];

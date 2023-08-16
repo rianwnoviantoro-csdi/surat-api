@@ -15,14 +15,14 @@ export interface IRole {
 @Entity("roles")
 export default class Role extends Abstract<Role> {
   @Column()
-  name?: string;
+  name: string;
 
   @OneToMany(() => User, (user) => user.role)
   users: User[];
 
   @ManyToMany(() => Permission)
   @JoinTable({
-    name: "role_permissions",
+    name: "role_permission",
     joinColumn: {
       name: "role",
       referencedColumnName: "uuid",
