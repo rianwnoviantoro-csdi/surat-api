@@ -33,7 +33,7 @@ export default class IncomingMailService {
 
     const lastAgenda = await this.incomingMailRepository.getLastAgenda();
 
-    if (lastAgenda) {
+    if (lastAgenda && lastAgenda.agenda === "0000001") {
       agenda = await GenerateAgenda(lastAgenda.agenda);
     }
 
