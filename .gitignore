@@ -3,3 +3,4 @@ node_modules
 
 # File
 .env
+yarn-error.log

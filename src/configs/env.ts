@@ -9,6 +9,9 @@ export const env = {
   cloudinaryName: process.env.CLOUDINARY_NAME || "",
   cloudinaryKey: process.env.CLOUDINARY_KEY || "",
   cloudinarySecret: process.env.CLOUDINARY_SECRET || "",
+  s3Access: process.env.S3_ACCESS_KEY || "",
+  s3Secret: process.env.S3_SECRET_KEY || "",
+  s3Region: process.env.S3_REGION || "",
 };
 
 export const database = {

@@ -10,7 +10,7 @@ import IncomingMail from "@entities/incoming-mail";
 import IncomingMailRepository from "@repositories/incoming-mail";
 import UserRepository from "@repositories/user";
 import GenerateAgenda from "@utils/agenda";
-import { uploadPDF } from "@utils/cloudinary";
+import { uploadToS3 } from "@utils/s3";
 
 export default class IncomingMailService {
   constructor(
@@ -27,6 +27,8 @@ export default class IncomingMailService {
 
     if (!existingUser) throw new ApiError(404, "Account not found.");
 
+    delete existingUser.password;
+
     let agenda = "0000001";
 
     const lastAgenda = await this.incomingMailRepository.getLastAgenda();
@@ -36,9 +38,12 @@ export default class IncomingMailService {
     }
 
     if (evidence) {
-      const uploadedImage: any = await uploadPDF(evidence, "incoming-mail");
+      const document = await uploadToS3(
+        `incoming-mails/${evidence.originalname}`,
+        evidence.buffer
+      );
 
-      if (uploadedImage) body.evidence = uploadedImage.secure_url;
+      body.evidence = document;
     }
 
     const mail = {

@@ -21,5 +21,6 @@ incomingMailRouter.post(
   controller.createMail.bind(controller)
 );
 incomingMailRouter.get("/v1", UseAuth, controller.mailList.bind(controller));
+incomingMailRouter.get("/v2", controller.mailList.bind(controller));
 
 export default incomingMailRouter;
