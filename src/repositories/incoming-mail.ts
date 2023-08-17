@@ -1,7 +1,8 @@
-import { Between, FindManyOptions, IsNull, Not, getRepository } from "typeorm";
+import { FindManyOptions, IsNull, Not, getRepository } from "typeorm";
 import { v4 } from "uuid";
 
 import IncomingMail from "@entities/incoming-mail";
+import { NewMailDto } from "@dtos/incoming-mail";
 
 export default class IncomingMailRepository {
   private repository = getRepository(IncomingMail);
@@ -38,14 +39,14 @@ export default class IncomingMailRepository {
     return await this.repository.findAndCount(options);
   }
 
-  async createMail(mail: any): Promise<IncomingMail> {
+  async createMail(mail: NewMailDto): Promise<IncomingMail> {
     const newMail = { ...mail, uuid: v4() };
     return await this.repository.save(newMail);
   }
 
   async updateMail(
     existingMail: IncomingMail,
-    partialMail: any
+    partialMail: NewMailDto
   ): Promise<IncomingMail> {
     const updatedMail = { ...existingMail, ...partialMail };
     return await this.repository.save(updatedMail);

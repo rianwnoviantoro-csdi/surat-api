@@ -1,7 +1,15 @@
-import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+} from "typeorm";
 
 import Abstract from "@entities/abstract";
 import User from "@entities/user";
+import Disposition from "@entities/disposition";
 
 export interface IIncomingMail {
   id?: number;
@@ -18,6 +26,7 @@ export interface IIncomingMail {
   mailingDate?: Date;
   receivedDate?: Date;
   archiver?: User;
+  disposition?: Disposition[];
   created_at?: Date;
   updated_at?: Date;
 }
@@ -53,6 +62,9 @@ export default class IncomingMail extends Abstract<IncomingMail> {
 
   @Column({ nullable: true, name: "mailing_date", comment: "tanggal surat" })
   mailingDate: Date;
+
+  @OneToMany(() => Disposition, (disposition) => disposition.mail)
+  dispositions: Disposition[];
 
   @Column({
     nullable: true,
