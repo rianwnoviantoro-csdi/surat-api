@@ -40,6 +40,11 @@ incomingMailRouter.get(
   UseAuth,
   incomingMailcontroller.mailList.bind(incomingMailcontroller)
 );
+incomingMailRouter.get(
+  "/v1/:agenda",
+  UseAuth,
+  incomingMailcontroller.detail.bind(incomingMailcontroller)
+);
 //
 incomingMailRouter.post(
   "/v1/:mail/disposition",
@@ -57,6 +62,10 @@ incomingMailRouter.get(
 incomingMailRouter.get(
   "/v2",
   incomingMailcontroller.mailList.bind(incomingMailcontroller)
+);
+incomingMailRouter.get(
+  "/v1/:agenda",
+  incomingMailcontroller.detail.bind(incomingMailcontroller)
 );
 incomingMailRouter.get(
   "/v2/:mail/disposition",

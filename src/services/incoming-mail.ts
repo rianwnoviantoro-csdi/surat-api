@@ -113,4 +113,12 @@ export default class IncomingMailService {
 
     return response;
   }
+
+  async detail(agenda: string): Promise<IncomingMail> {
+    const result = await this.incomingMailRepository.getMailByAgenda(agenda);
+
+    delete result.archiver.password;
+
+    return result;
+  }
 }

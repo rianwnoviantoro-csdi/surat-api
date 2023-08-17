@@ -25,13 +25,9 @@ export default class IncomingMailController {
         abortEarly: false,
       });
 
-      const result = await this.incomingMailService.createMail(
-        archiverUUID,
-        body,
-        evidence
+      return res.success(
+        await this.incomingMailService.createMail(archiverUUID, body, evidence)
       );
-
-      return res.success(result);
     } catch (error) {
       if (error instanceof ApiError) {
         res.error(error.status, error.message);
@@ -60,9 +56,25 @@ export default class IncomingMailController {
         agenda: agenda as string,
       };
 
-      const result = await this.incomingMailService.mailList(options);
+      return res.success(await this.incomingMailService.mailList(options));
+    } catch (error) {
+      if (error instanceof ApiError) {
+        res.error(error.status, error.message);
+      } else if (error instanceof ValidationError) {
+        const errorMessages = error.details.map((err) => err.message);
+        res.error(400, errorMessages);
+      } else {
+        console.log(error.message);
+        res.error(500, "Internal Server Error");
+      }
+    }
+  }
 
-      return res.success(result);
+  async detail(req: RequestWithUser, res: Response) {
+    try {
+      return res.success(
+        await this.incomingMailService.detail(req.params.agenda)
+      );
     } catch (error) {
       if (error instanceof ApiError) {
         res.error(error.status, error.message);

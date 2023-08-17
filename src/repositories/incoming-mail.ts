@@ -8,13 +8,19 @@ export default class IncomingMailRepository {
   private repository = getRepository(IncomingMail);
 
   async getMailByUUID(uuid: string): Promise<IncomingMail | null> {
-    const existingMail = await this.repository.findOne({ where: { uuid } });
+    const existingMail = await this.repository.findOne({
+      where: { uuid },
+      relations: { archiver: true, dispositions: true },
+    });
 
     return existingMail;
   }
 
   async getMailByAgenda(agenda: string): Promise<IncomingMail | null> {
-    const existingMail = await this.repository.findOne({ where: { agenda } });
+    const existingMail = await this.repository.findOne({
+      where: { agenda },
+      relations: { archiver: true, dispositions: true },
+    });
 
     return existingMail;
   }
