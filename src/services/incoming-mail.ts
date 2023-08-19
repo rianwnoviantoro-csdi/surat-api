@@ -70,6 +70,7 @@ export default class IncomingMailService {
 
     const findOptions: FindManyOptions = {
       select: {
+        uuid: true,
         agenda: true,
         number: true,
         origin: true,

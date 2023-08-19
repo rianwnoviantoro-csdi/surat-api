@@ -23,8 +23,10 @@ export default class AuthController {
         res.error(error.status, error.message);
       } else if (error instanceof ValidationError) {
         const errorMessages = error.details.map((err) => err.message);
+        console.log(error);
         res.error(400, errorMessages);
       } else {
+        console.log(error);
         res.error(500, "Internal Server Error");
       }
     }

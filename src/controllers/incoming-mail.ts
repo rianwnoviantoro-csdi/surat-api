@@ -43,6 +43,7 @@ export default class IncomingMailController {
 
   async mailList(req: RequestWithUser, res: Response) {
     try {
+      console.log("hit");
       let { page, pageSize, sort, order, startDate, endDate, agenda } =
         req.query;
 
