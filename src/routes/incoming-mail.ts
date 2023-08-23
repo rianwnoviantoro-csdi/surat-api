@@ -1,14 +1,14 @@
 import { Router } from "express";
 
-import IncomingMailController from "@controllers/incoming-mail";
-import UseAuth from "@middlewares/auth";
-import IncomingMailRepository from "@repositories/incoming-mail";
-import UserRepository from "@repositories/user";
-import IncomingMailService from "@services/incoming-mail";
-import multer from "@utils/multer";
-import DispositionController from "@controllers/disposition";
-import DispositionService from "@services/disposition";
-import DispositionRepository from "@repositories/disposition";
+import IncomingMailController from "../controllers/incoming-mail";
+import UseAuth from "../middlewares/auth";
+import IncomingMailRepository from "../repositories/incoming-mail";
+import UserRepository from "../repositories/user";
+import IncomingMailService from "../services/incoming-mail";
+import multer from "../utils/multer";
+import DispositionController from "../controllers/disposition";
+import DispositionService from "../services/disposition";
+import DispositionRepository from "../repositories/disposition";
 
 const incomingMailRouter: Router = Router();
 

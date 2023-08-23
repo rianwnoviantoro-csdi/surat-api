@@ -1,11 +1,11 @@
 import { Response } from "express";
 import { ValidationError } from "joi";
 
-import ApiError from "@configs/api-error";
-import { NewDispositionDto } from "@dtos/disposition";
-import { RequestWithUser } from "@middlewares/auth";
-import DispositionService from "@services/disposition";
-import { createDispositionSchema } from "@validators/disposition";
+import ApiError from "../configs/api-error";
+import { NewDispositionDto } from "../dto/disposition";
+import { RequestWithUser } from "../middlewares/auth";
+import DispositionService from "../services/disposition";
+import { createDispositionSchema } from "../validators/disposition";
 
 export default class DispositionController {
   constructor(private readonly dispositionService: DispositionService) {}

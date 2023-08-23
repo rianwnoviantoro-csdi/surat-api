@@ -4,13 +4,13 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 
-import "@configs/database";
-import { env } from "@configs/env";
-import { ErrorHandler } from "@middlewares/error-handler";
-import { ResponseHandler } from "@middlewares/response-handler";
-import authRouter from "@routes/auth";
-import incomingMailRouter from "@routes/incoming-mail";
-import userRouter from "@routes/user";
+import "./configs/database";
+import { env } from "./configs/env";
+import { ErrorHandler } from "./middlewares/error-handler";
+import { ResponseHandler } from "./middlewares/response-handler";
+import authRouter from "./routes/auth";
+import incomingMailRouter from "./routes/incoming-mail";
+import userRouter from "./routes/user";
 
 const app: Application = express();
 

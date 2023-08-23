@@ -2,23 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "baseUrl": "./", // Base URL for resolving non-relative module names.
-    "paths": {
-      "@constants/*": ["src/constants/*"],
-      "@configs/*": ["src/configs/*"],
-      "@controllers/*": ["src/controllers/*"],
-      "@dtos/*": ["src/dto/*"],
-      "@entities/*": ["src/entities/*"],
-      "@middlewares/*": ["src/middlewares/*"],
-      "@migrations/*": ["src/migrations/*"],
-      "@repositories/*": ["src/repositories/*"],
-      "@routes/*": ["src/routes/*"],
-      "@seeders/*": ["src/seeders/*"],
-      "@services/*": ["src/services/*"],
-      "@utils/*": ["src/utils/*"],
-      "@validators/*": ["src/validators/*"]
-      // Add more aliases as needed for your project.
-    },
+    "baseUrl": ".", // Base URL for resolving non-relative module names.
     "outDir": "dist",
     "rootDir": "src",
     "esModuleInterop": true,

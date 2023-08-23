@@ -1,5 +1,5 @@
-import IncomingMail from "@entities/incoming-mail";
-import User from "@entities/user";
+import IncomingMail from "../entities/incoming-mail";
+import User from "../entities/user";
 
 export class NewMailDto {
   agenda?: string;

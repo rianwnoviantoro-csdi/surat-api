@@ -1,9 +1,9 @@
 import { ValidationError } from "joi";
 import { Response } from "express";
 
-import ApiError from "@configs/api-error";
-import { RequestWithUser } from "@middlewares/auth";
-import UserService from "@services/user";
+import ApiError from "../configs/api-error";
+import { RequestWithUser } from "../middlewares/auth";
+import UserService from "../services/user";
 
 export default class UserController {
   constructor(private userService: UserService) {}

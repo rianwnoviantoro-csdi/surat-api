@@ -1,9 +1,9 @@
 import { getRepository, getConnection } from "typeorm";
 import bcrypt from "bcrypt";
 
-import Permission from "@entities/permission";
-import Role from "@entities/role";
-import User from "@entities/user";
+import Permission from "../entities/permission";
+import Role from "../entities/role";
+import User from "../entities/user";
 import { v4 } from "uuid";
 
 export const UserRolePermission = async () => {

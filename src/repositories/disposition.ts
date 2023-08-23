@@ -1,8 +1,8 @@
 import { getRepository } from "typeorm";
 
-import Disposition from "@entities/disposition";
+import Disposition from "../entities/disposition";
 import { v4 } from "uuid";
-import { NewDispositionDto } from "@dtos/disposition";
+import { NewDispositionDto } from "../dto/disposition";
 
 export default class DispositionRepository {
   private repository = getRepository(Disposition);

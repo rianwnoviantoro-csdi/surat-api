@@ -1,11 +1,11 @@
 import { ValidationError } from "joi";
 import { Response } from "express";
 
-import { NewMailDto, PaginationOptions } from "@dtos/incoming-mail";
-import { RequestWithUser } from "@middlewares/auth";
-import IncomingMailService from "@services/incoming-mail";
-import { createIncomingMailSchema } from "@validators/incoming-mail";
-import ApiError from "@configs/api-error";
+import { NewMailDto, PaginationOptions } from "../dto/incoming-mail";
+import { RequestWithUser } from "../middlewares/auth";
+import IncomingMailService from "../services/incoming-mail";
+import { createIncomingMailSchema } from "../validators/incoming-mail";
+import ApiError from "../configs/api-error";
 
 export default class IncomingMailController {
   constructor(private readonly incomingMailService: IncomingMailService) {}

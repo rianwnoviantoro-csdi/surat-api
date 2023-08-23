@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-import { NewDispositionDto } from "@dtos/disposition";
+import { NewDispositionDto } from "../dto/disposition";
 
 export const createDispositionSchema = Joi.object<NewDispositionDto>({
   objective: Joi.string().allow(null),

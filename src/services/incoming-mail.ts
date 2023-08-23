@@ -1,16 +1,16 @@
-import { Between, FindManyOptions } from "typeorm";
+import { Between, FindManyOptions, ILike } from "typeorm";
 
-import ApiError from "@configs/api-error";
+import ApiError from "../configs/api-error";
 import {
   MailsResponse,
   NewMailDto,
   PaginationOptions,
-} from "@dtos/incoming-mail";
-import IncomingMail from "@entities/incoming-mail";
-import IncomingMailRepository from "@repositories/incoming-mail";
-import UserRepository from "@repositories/user";
-import GenerateAgenda from "@utils/agenda";
-import { uploadToS3 } from "@utils/s3";
+} from "../dto/incoming-mail";
+import IncomingMail from "../entities/incoming-mail";
+import IncomingMailRepository from "../repositories/incoming-mail";
+import UserRepository from "../repositories/user";
+import GenerateAgenda from "../utils/agenda";
+import { uploadToS3 } from "../utils/s3";
 
 export default class IncomingMailService {
   constructor(
@@ -33,7 +33,7 @@ export default class IncomingMailService {
 
     const lastAgenda = await this.incomingMailRepository.getLastAgenda();
 
-    if (lastAgenda && lastAgenda.agenda === "0000001") {
+    if (lastAgenda) {
       agenda = await GenerateAgenda(lastAgenda.agenda);
     }
 
@@ -75,6 +75,7 @@ export default class IncomingMailService {
         number: true,
         origin: true,
         regarding: true,
+        recipient: true,
         mailingDate: true,
         receivedDate: true,
       },
@@ -92,7 +93,7 @@ export default class IncomingMailService {
 
     if (agenda) {
       findOptions.where = {
-        agenda: agenda,
+        agenda: ILike(`%${agenda}%`),
       };
     }
 

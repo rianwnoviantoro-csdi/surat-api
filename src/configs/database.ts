@@ -1,7 +1,7 @@
 import { createConnection } from "typeorm";
 
-import { env, database } from "@configs/env";
-import { UserRolePermission } from "@seeders/user-role-permission";
+import { env, database } from "../configs/env";
+import { UserRolePermission } from "../seeders/user-role-permission";
 
 createConnection({
   type: "postgres",
@@ -10,7 +10,8 @@ createConnection({
   username: database.pgUser,
   password: database.pgPass,
   database: database.pgDBName,
-  entities: ["src/entities/*.ts"],
+  entities:
+    env.env === "development" ? ["src/entities/*.ts"] : ["dist/entities/*.ts"],
   synchronize: env.env === "development" && true,
   logging: env.env === "development" && true,
 })

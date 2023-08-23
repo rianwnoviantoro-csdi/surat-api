@@ -1,8 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 
-import Abstract from "@entities/abstract";
-import Role from "@entities/role";
-import IncomingMail from "@entities/incoming-mail";
+import Abstract from "./abstract";
+import Role from "./role";
+import IncomingMail from "./incoming-mail";
 
 export interface IUser {
   id?: number;

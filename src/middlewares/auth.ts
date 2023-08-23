@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
-import ApiError from "@configs/api-error";
-import { env } from "@configs/env";
+import ApiError from "../configs/api-error";
+import { env } from "../configs/env";
 
 export interface IDecode extends JwtPayload {
   uuid: string;

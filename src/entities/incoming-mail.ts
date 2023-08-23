@@ -7,9 +7,9 @@ import {
   OneToOne,
 } from "typeorm";
 
-import Abstract from "@entities/abstract";
-import User from "@entities/user";
-import Disposition from "@entities/disposition";
+import Abstract from "./abstract";
+import User from "./user";
+import Disposition from "./disposition";
 
 export interface IIncomingMail {
   id?: number;

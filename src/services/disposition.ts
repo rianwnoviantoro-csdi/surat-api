@@ -1,10 +1,10 @@
-import ApiError from "@configs/api-error";
-import { NewDispositionDto } from "@dtos/disposition";
-import Disposition from "@entities/disposition";
-import DispositionRepository from "@repositories/disposition";
-import IncomingMailRepository from "@repositories/incoming-mail";
-import UserRepository from "@repositories/user";
-import { uploadToS3 } from "@utils/s3";
+import ApiError from "../configs/api-error";
+import { NewDispositionDto } from "../dto/disposition";
+import Disposition from "../entities/disposition";
+import DispositionRepository from "../repositories/disposition";
+import IncomingMailRepository from "../repositories/incoming-mail";
+import UserRepository from "../repositories/user";
+import { uploadToS3 } from "../utils/s3";
 
 export default class DispositionService {
   constructor(

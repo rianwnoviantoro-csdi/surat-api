@@ -4,7 +4,7 @@ import {
   DeleteObjectCommand,
 } from "@aws-sdk/client-s3";
 
-import S3 from "@configs/s3";
+import S3 from "../configs/s3";
 
 export async function uploadToS3(filename: string, buffer: Buffer) {
   return new Promise<any>((resolve, reject) => {

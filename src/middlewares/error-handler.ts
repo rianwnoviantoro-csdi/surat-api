@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-import ApiError from "@configs/api-error";
+import ApiError from "../configs/api-error";
 
 export function ErrorHandler(
   err: Error,

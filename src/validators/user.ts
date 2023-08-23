@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-import { LoginDto } from "@dtos/user";
+import { LoginDto } from "../dto/user";
 
 export const loginSchema = Joi.object<LoginDto>({
   email: Joi.string().required(),

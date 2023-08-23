@@ -1,8 +1,8 @@
 import { FindManyOptions, IsNull, Not, getRepository } from "typeorm";
 import { v4 } from "uuid";
 
-import IncomingMail from "@entities/incoming-mail";
-import { NewMailDto } from "@dtos/incoming-mail";
+import IncomingMail from "../entities/incoming-mail";
+import { NewMailDto } from "../dto/incoming-mail";
 
 export default class IncomingMailRepository {
   private repository = getRepository(IncomingMail);

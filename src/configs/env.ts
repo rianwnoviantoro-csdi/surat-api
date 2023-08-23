@@ -1,9 +1,16 @@
-import "dotenv/config";
+import dotenv from "dotenv";
+
+dotenv.config({
+  path:
+    process.env.NODE_ENV === "production"
+      ? ".env.production"
+      : ".env.development",
+});
 
 export const env = {
   port: Number(process.env.APP_PORT) || 3001,
   host: Number(process.env.APP_HOST) || "localhost",
-  env: process.env.APP_ENV || "development",
+  env: process.env.NODE_ENV || "development",
   secret: process.env.JWT_SECRET || "s3CrEtk3y",
   refresh: process.env.JWT_REFRESH || "R3frE5H",
   cloudinaryName: process.env.CLOUDINARY_NAME || "",

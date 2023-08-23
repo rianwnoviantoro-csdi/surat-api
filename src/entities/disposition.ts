@@ -1,8 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 
-import Abstract from "@entities/abstract";
-import User from "@entities/user";
-import IncomingMail from "@entities/incoming-mail";
+import Abstract from "./abstract";
+import User from "./user";
+import IncomingMail from "./incoming-mail";
 
 export enum Trait {
   IMPORTANT = "penting",

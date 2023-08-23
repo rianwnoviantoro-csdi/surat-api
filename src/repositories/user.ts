@@ -1,8 +1,8 @@
 import { getRepository } from "typeorm";
 import { v4 } from "uuid";
 
-import { RegisterDto, UpdateUserDto } from "@dtos/user";
-import User from "@entities/user";
+import { RegisterDto, UpdateUserDto } from "../dto/user";
+import User from "../entities/user";
 
 export default class UserRepository {
   private repository = getRepository(User);

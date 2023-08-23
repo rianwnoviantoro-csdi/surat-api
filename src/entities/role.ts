@@ -1,8 +1,8 @@
 import { Column, Entity, JoinTable, ManyToMany, OneToMany } from "typeorm";
 
-import Abstract from "@entities/abstract";
-import Permission from "@entities/permission";
-import User from "@entities/user";
+import Abstract from "./abstract";
+import Permission from "./permission";
+import User from "./user";
 
 export interface IRole {
   id?: number;

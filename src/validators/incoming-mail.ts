@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-import { NewMailDto } from "@dtos/incoming-mail";
+import { NewMailDto } from "../dto/incoming-mail";
 
 export const createIncomingMailSchema = Joi.object<NewMailDto>({
   agenda: Joi.string().allow(null),

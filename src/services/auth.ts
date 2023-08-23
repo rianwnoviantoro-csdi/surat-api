@@ -1,10 +1,10 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-import ApiError from "@configs/api-error";
-import { LoginDto } from "@dtos/user";
-import UserRepository from "@repositories/user";
-import { env } from "@configs/env";
+import ApiError from "../configs/api-error";
+import { LoginDto } from "../dto/user";
+import UserRepository from "../repositories/user";
+import { env } from "../configs/env";
 import { CookieOptions, Response } from "express";
 
 export default class AuthService {

@@ -1,7 +1,7 @@
 import { Column, Entity, ManyToMany, OneToMany } from "typeorm";
 
-import Abstract from "@entities/abstract";
-import Role from "@entities/role";
+import Abstract from "./abstract";
+import Role from "./role";
 
 export interface IPermission {
   id?: number;

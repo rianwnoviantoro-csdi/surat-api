@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { ValidationError } from "joi";
 
-import AuthService from "@services/auth";
-import { LoginDto } from "@dtos/user";
-import { loginSchema } from "@validators/user";
-import ApiError from "@configs/api-error";
+import AuthService from "../services/auth";
+import { LoginDto } from "../dto/user";
+import { loginSchema } from "../validators/user";
+import ApiError from "../configs/api-error";
 
 export default class AuthController {
   constructor(private readonly authService: AuthService) {}
