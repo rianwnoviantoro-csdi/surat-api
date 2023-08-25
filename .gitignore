@@ -3,6 +3,5 @@ node_modules
 dist
 
 # File
-.env.development
-.env.production
+.env
 yarn-error.log

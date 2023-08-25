@@ -3,6 +3,12 @@ import { createConnection } from "typeorm";
 import { env, database } from "../configs/env";
 import { UserRolePermission } from "../seeders/user-role-permission";
 
+import Permission from "../entities/permission";
+import Role from "../entities/role";
+import User from "../entities/user";
+import IncomingMail from "../entities/incoming-mail";
+import Disposition from "../entities/disposition";
+
 createConnection({
   type: "postgres",
   host: database.pgHost,
@@ -10,10 +16,9 @@ createConnection({
   username: database.pgUser,
   password: database.pgPass,
   database: database.pgDBName,
-  entities:
-    env.env === "development" ? ["src/entities/*.ts"] : ["dist/entities/*.ts"],
-  synchronize: env.env === "development" && true,
-  logging: env.env === "development" && true,
+  entities: [Permission, Role, User, IncomingMail, Disposition],
+  synchronize: true,
+  logging: false,
 })
   .then(async () => {
     console.log("Database connection established.");

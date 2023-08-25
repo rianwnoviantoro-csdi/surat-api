@@ -4,8 +4,8 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "build": "set NODE_ENV=production && tsc",
-    "start": "set NODE_ENV=production && node ./dist/index.js",
+    "build": "tsc",
+    "start": "node ./dist/index.js",
     "start:dev": "nodemon"
   },
   "dependencies": {

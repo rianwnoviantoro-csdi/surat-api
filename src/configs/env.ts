@@ -1,11 +1,4 @@
-import dotenv from "dotenv";
-
-dotenv.config({
-  path:
-    process.env.NODE_ENV === "production"
-      ? ".env.production"
-      : ".env.development",
-});
+import "dotenv/config";
 
 export const env = {
   port: Number(process.env.APP_PORT) || 3001,
