@@ -8,6 +8,7 @@ import Role from "../entities/role";
 import User from "../entities/user";
 import IncomingMail from "../entities/incoming-mail";
 import Disposition from "../entities/disposition";
+import OutgoingMail from "../entities/outgoing-mail";
 
 createConnection({
   type: "postgres",
@@ -16,7 +17,7 @@ createConnection({
   username: database.pgUser,
   password: database.pgPass,
   database: database.pgDBName,
-  entities: [Permission, Role, User, IncomingMail, Disposition],
+  entities: [Permission, Role, User, IncomingMail, Disposition, OutgoingMail],
   synchronize: true,
   logging: false,
 })
