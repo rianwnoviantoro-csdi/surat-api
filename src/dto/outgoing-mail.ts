@@ -1,18 +1,16 @@
-import IncomingMail from "../entities/incoming-mail";
+import OutgoingMail from "../entities/outgoing-mail";
 import User from "../entities/user";
 
 export class NewMailDto {
   agenda?: string;
   number?: string;
-  origin?: string;
   regarding?: string;
-  followUp?: string;
+  destination?: string;
   explanation?: string;
   evidence?: string;
   attachment?: string;
-  recipient?: string;
+  year?: string;
   mailingDate?: Date;
-  receivedDate?: Date;
   archiver?: User;
 }
 
@@ -20,10 +18,9 @@ export class MailListDto {
   uuid?: string;
   agenda?: string;
   number?: string;
-  origin?: string;
+  destination?: string;
   regarding?: string;
   mailingDate?: Date;
-  receivedDate?: Date;
 }
 
 export interface PaginationOptions {
@@ -44,6 +41,6 @@ export interface PaginationInfo {
 }
 
 export interface MailsResponse {
-  mails: IncomingMail[];
+  mails: OutgoingMail[];
   pagination: PaginationInfo;
 }

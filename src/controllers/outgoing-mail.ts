@@ -1,14 +1,14 @@
 import { ValidationError } from "joi";
 import { Response } from "express";
 
-import { NewMailDto, PaginationOptions } from "../dto/incoming-mail";
+import { NewMailDto, PaginationOptions } from "../dto/outgoing-mail";
 import { RequestWithUser } from "../middlewares/auth";
-import IncomingMailService from "../services/incoming-mail";
-import { createIncomingMailSchema } from "../validators/incoming-mail";
+import OutgoingMailService from "../services/outgoing-mail";
+import { createOutgingMailSchema } from "../validators/outgoing-mail";
 import ApiError from "../configs/api-error";
 
-export default class IncomingMailController {
-  constructor(private readonly incomingMailService: IncomingMailService) {}
+export default class OutgoingMailController {
+  constructor(private readonly outgingMailService: OutgoingMailService) {}
 
   async createMail(req: RequestWithUser, res: Response) {
     try {
@@ -21,12 +21,12 @@ export default class IncomingMailController {
         evidence = req.file;
       }
 
-      await createIncomingMailSchema.validateAsync(body, {
+      await createOutgingMailSchema.validateAsync(body, {
         abortEarly: false,
       });
 
       return res.success(
-        await this.incomingMailService.createMail(archiverUUID, body, evidence)
+        await this.outgingMailService.createMail(archiverUUID, body, evidence)
       );
     } catch (error) {
       if (error instanceof ApiError) {
@@ -43,9 +43,15 @@ export default class IncomingMailController {
 
   async mailList(req: RequestWithUser, res: Response) {
     try {
-
-      let { page = 1, pageSize = 10, sort = 'agenda', order = 'asc', startDate, endDate, agenda } =
-        req.query;
+      let {
+        page = 1,
+        pageSize = 10,
+        sort = "agenda",
+        order = "asc",
+        startDate,
+        endDate,
+        agenda,
+      } = req.query;
 
       const options: PaginationOptions = {
         pageNumber: Number(page),
@@ -57,7 +63,7 @@ export default class IncomingMailController {
         agenda: agenda as string,
       };
 
-      return res.success(await this.incomingMailService.mailList(options));
+      return res.success(await this.outgingMailService.mailList(options));
     } catch (error) {
       if (error instanceof ApiError) {
         res.error(error.status, error.message);
@@ -74,7 +80,7 @@ export default class IncomingMailController {
   async detail(req: RequestWithUser, res: Response) {
     try {
       return res.success(
-        await this.incomingMailService.detail(req.params.agenda)
+        await this.outgingMailService.detail(req.params.agenda)
       );
     } catch (error) {
       if (error instanceof ApiError) {
