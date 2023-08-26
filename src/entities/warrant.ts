@@ -19,6 +19,7 @@ export interface IWarrant {
   employee?: string;
   dipa?: boolean;
   archiver?: User;
+  is_active?: boolean;
   created_at?: Date;
   updated_at?: Date;
 }

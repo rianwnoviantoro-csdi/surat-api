@@ -28,7 +28,6 @@ const dispositionService = new DispositionService(
 );
 const dispositionController = new DispositionController(dispositionService);
 
-// V1
 incomingMailRouter.post(
   "/v1",
   UseAuth,
@@ -45,7 +44,29 @@ incomingMailRouter.get(
   UseAuth,
   incomingMailcontroller.detail.bind(incomingMailcontroller)
 );
-//
+incomingMailRouter.put(
+  "/v1/:agenda",
+  UseAuth,
+  multer.upload.single("evidence"),
+  incomingMailcontroller.update.bind(incomingMailcontroller)
+);
+incomingMailRouter.delete(
+  "/v1/:agenda/soft",
+  UseAuth,
+  incomingMailcontroller.softDelete.bind(incomingMailcontroller)
+);
+incomingMailRouter.delete(
+  "/v1/:agenda/hard",
+  UseAuth,
+  incomingMailcontroller.delete.bind(incomingMailcontroller)
+);
+incomingMailRouter.get(
+  "/v1/:agenda/restore",
+  UseAuth,
+  incomingMailcontroller.restore.bind(incomingMailcontroller)
+);
+
+// Disposition
 incomingMailRouter.post(
   "/v1/:mail/disposition",
   UseAuth,
@@ -55,20 +76,6 @@ incomingMailRouter.post(
 incomingMailRouter.get(
   "/v1/:mail/disposition",
   UseAuth,
-  dispositionController.dispositionList.bind(dispositionController)
-);
-
-// V2
-incomingMailRouter.get(
-  "/v2",
-  incomingMailcontroller.mailList.bind(incomingMailcontroller)
-);
-incomingMailRouter.get(
-  "/v1/:agenda",
-  incomingMailcontroller.detail.bind(incomingMailcontroller)
-);
-incomingMailRouter.get(
-  "/v2/:mail/disposition",
   dispositionController.dispositionList.bind(dispositionController)
 );
 

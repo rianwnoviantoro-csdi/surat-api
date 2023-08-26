@@ -12,6 +12,7 @@ export class NewMailDto {
   year?: string;
   mailingDate?: Date;
   archiver?: User;
+  is_active?: boolean;
 }
 
 export class MailListDto {

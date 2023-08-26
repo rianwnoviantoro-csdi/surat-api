@@ -15,4 +15,5 @@ export const createIncomingMailSchema = Joi.object<NewMailDto>({
   mailingDate: Joi.date().allow(null, ""),
   receivedDate: Joi.date().allow(null, ""),
   archiver: Joi.string().allow(null, ""),
+  is_active: Joi.boolean().default(true),
 });

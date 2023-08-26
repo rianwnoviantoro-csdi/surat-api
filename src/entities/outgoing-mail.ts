@@ -16,6 +16,7 @@ export interface IOutgoingMail {
   year?: string;
   mailingDate?: Date;
   archiver?: User;
+  is_active?: boolean;
   created_at?: Date;
   updated_at?: Date;
 }

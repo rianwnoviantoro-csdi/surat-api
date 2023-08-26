@@ -14,6 +14,7 @@ export class NewMailDto {
   mailingDate?: Date;
   receivedDate?: Date;
   archiver?: User;
+  is_active?: boolean;
 }
 
 export class MailListDto {
@@ -34,6 +35,7 @@ export interface PaginationOptions {
   startDate?: string;
   endDate?: string;
   agenda?: string;
+  active?: boolean;
 }
 
 export interface PaginationInfo {

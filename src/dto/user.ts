@@ -6,6 +6,7 @@ export class RegisterDto {
   email: string;
   password: string;
   role: Role;
+  is_active?: boolean;
 }
 
 export class LoginDto {

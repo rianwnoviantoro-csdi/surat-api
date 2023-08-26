@@ -16,4 +16,5 @@ export const createOutgingMailSchema = Joi.object<NewMailDto>({
   endDate: Joi.date().allow(null, ""),
   mailingDate: Joi.date().allow(null, ""),
   archiver: Joi.string().allow(null, ""),
+  is_active: Joi.boolean().default(true),
 });

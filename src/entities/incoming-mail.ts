@@ -27,6 +27,7 @@ export interface IIncomingMail {
   receivedDate?: Date;
   archiver?: User;
   disposition?: Disposition[];
+  is_active?: boolean;
   created_at?: Date;
   updated_at?: Date;
 }
