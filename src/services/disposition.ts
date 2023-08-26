@@ -1,5 +1,5 @@
 import ApiError from "../configs/api-error";
-import { NewDispositionDto } from "../dto/disposition";
+import { DispositionListDto, NewDispositionDto } from "../dto/disposition";
 import Disposition from "../entities/disposition";
 import DispositionRepository from "../repositories/disposition";
 import IncomingMailRepository from "../repositories/incoming-mail";
@@ -47,7 +47,29 @@ export default class DispositionService {
     return await this.dispositionRepository.createDisposition(disposition);
   }
 
-  async dispositionList(mail: string): Promise<Disposition[] | []> {
-    return await this.dispositionRepository.find(mail);
+  async dispositionList(mail: string): Promise<DispositionListDto[] | []> {
+    const content = await this.dispositionRepository.find(mail);
+
+    return await this.dispositionMapping(content);
+  }
+
+  async dispositionMapping(
+    dispositions: Disposition[]
+  ): Promise<DispositionListDto[] | []> {
+    let list = [];
+
+    for (const disposition of dispositions) {
+      const object: DispositionListDto = {
+        uuid: disposition.uuid,
+        content: disposition.content,
+        deadline: disposition.deadline,
+        objective: disposition.objective,
+        trait: disposition.trait,
+      };
+
+      list.push(object);
+    }
+
+    return list;
   }
 }
