@@ -16,18 +16,17 @@ export function ResponseHandler(
 ): void {
   res.success = function (data: any): Response {
     return res.status(200).json({
-      success: true,
+      statusCode: 200,
+      message: "Success.",
       data,
     });
   };
 
   res.error = function (status: number, message: string | string[]): Response {
     return res.status(status).json({
-      success: false,
-      error: {
-        status,
-        message,
-      },
+      statusCode: status,
+      message,
+      data: [],
     });
   };
 

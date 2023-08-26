@@ -64,6 +64,7 @@ export default class IncomingMailService {
       startDate,
       endDate,
       agenda,
+      active,
     } = options;
 
     const skip = (pageNumber - 1) * pageSize;
@@ -78,11 +79,15 @@ export default class IncomingMailService {
         recipient: true,
         mailingDate: true,
         receivedDate: true,
+        is_active: true,
       },
       skip,
       take: pageSize,
       order: { [sortingField]: sortOrder || "ASC" },
-      where: {},
+      where: {
+        is_active: active,
+        agenda: ILike(`%${agenda}%`),
+      },
     };
 
     if (startDate && endDate) {
@@ -91,15 +96,11 @@ export default class IncomingMailService {
       };
     }
 
-    if (agenda) {
-      findOptions.where = {
-        agenda: ILike(`%${agenda}%`),
-      };
-    }
-
     const [mails, total] = await this.incomingMailRepository.paginate(
       findOptions
     );
+
+    if (mails.length === 0) throw new ApiError(404, "Mail not found.");
 
     const totalPages = Math.ceil(total / pageSize);
 
@@ -117,10 +118,66 @@ export default class IncomingMailService {
   }
 
   async detail(agenda: string): Promise<IncomingMail> {
-    const result = await this.incomingMailRepository.getMailByAgenda(agenda);
-
-    delete result.archiver.password;
+    const result = await this.checkExistMail(agenda);
 
     return result;
+  }
+
+  async update(
+    agenda: string,
+    userUUID: string,
+    body: NewMailDto,
+    evidence: any
+  ): Promise<IncomingMail> {
+    const mail = await this.checkExistMail(agenda);
+
+    if (mail.archiver.uuid !== userUUID) {
+      throw new ApiError(403, "Unauthorized.");
+    }
+
+    if (evidence) {
+      const document = await uploadToS3(
+        `incoming-mails/${evidence.originalname}`,
+        evidence.buffer
+      );
+
+      body.evidence = document;
+    }
+
+    return await this.incomingMailRepository.updateMail(mail, body);
+  }
+
+  async softDelete(agenda: string): Promise<IncomingMail> {
+    const mail = await this.checkExistMail(agenda);
+
+    return await this.incomingMailRepository.softDelete(mail);
+  }
+
+  async restore(agenda: string): Promise<IncomingMail> {
+    const mail = await this.checkExistMail(agenda, false);
+
+    return await this.incomingMailRepository.restore(mail);
+  }
+
+  async deleteMail(agenda: string): Promise<boolean> {
+    const mail = await this.checkExistMail(agenda, false);
+
+    return await this.incomingMailRepository.deleteMail(mail.agenda);
+  }
+
+  async checkExistMail(
+    agenda: string,
+    active: boolean = true
+  ): Promise<IncomingMail> {
+    const exist = await this.incomingMailRepository.getMailByAgenda(
+      agenda,
+      active
+    );
+
+    if (!exist) throw new ApiError(404, "Mail not found.");
+
+    delete exist.archiver.password;
+
+    return exist;
   }
 }

@@ -9,6 +9,7 @@ export class NewDispositionDto {
   evidence?: string;
   notation?: string;
   mail?: IncomingMail;
+  is_active?: boolean;
   deadline?: Date;
   archiver?: User;
 }

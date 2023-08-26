@@ -15,6 +15,7 @@ export class NewMailDto {
   employee?: string;
   dipa?: boolean;
   archiver?: User;
+  is_active?: boolean;
 }
 
 export interface PaginationOptions {

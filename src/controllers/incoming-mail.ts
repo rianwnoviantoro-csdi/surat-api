@@ -43,9 +43,20 @@ export default class IncomingMailController {
 
   async mailList(req: RequestWithUser, res: Response) {
     try {
+      let {
+        page = 1,
+        pageSize = 10,
+        sort = "agenda",
+        order = "asc",
+        startDate,
+        endDate,
+        agenda = "",
+        active = "true",
+      } = req.query;
 
-      let { page = 1, pageSize = 10, sort = 'agenda', order = 'asc', startDate, endDate, agenda } =
-        req.query;
+      let isActive = true;
+
+      active === "true" ? (isActive = true) : (isActive = false);
 
       const options: PaginationOptions = {
         pageNumber: Number(page),
@@ -55,6 +66,7 @@ export default class IncomingMailController {
         startDate: startDate as string,
         endDate: endDate as string,
         agenda: agenda as string,
+        active: isActive,
       };
 
       return res.success(await this.incomingMailService.mailList(options));
@@ -84,6 +96,97 @@ export default class IncomingMailController {
         res.error(400, errorMessages);
       } else {
         console.log(error.message);
+        res.error(500, "Internal Server Error");
+      }
+    }
+  }
+
+  async update(req: RequestWithUser, res: Response) {
+    try {
+      const agenda = req.params.agenda;
+      const archiverUUID = req.user?.uuid as string;
+      const body: NewMailDto = req.body;
+
+      let evidence = null;
+
+      if (req.file) {
+        evidence = req.file;
+      }
+
+      await createIncomingMailSchema.validateAsync(body, {
+        abortEarly: false,
+      });
+
+      return res.success(
+        await this.incomingMailService.update(
+          agenda,
+          archiverUUID,
+          body,
+          evidence
+        )
+      );
+    } catch (error) {
+      if (error instanceof ApiError) {
+        res.error(error.status, error.message);
+      } else if (error instanceof ValidationError) {
+        const errorMessages = error.details.map((err) => err.message);
+        res.error(400, errorMessages);
+      } else {
+        console.log(error);
+        res.error(500, "Internal Server Error");
+      }
+    }
+  }
+
+  async softDelete(req: RequestWithUser, res: Response) {
+    try {
+      return res.success(
+        await this.incomingMailService.softDelete(req.params.agenda)
+      );
+    } catch (error) {
+      if (error instanceof ApiError) {
+        res.error(error.status, error.message);
+      } else if (error instanceof ValidationError) {
+        const errorMessages = error.details.map((err) => err.message);
+        res.error(400, errorMessages);
+      } else {
+        console.log(error);
+        res.error(500, "Internal Server Error");
+      }
+    }
+  }
+
+  async restore(req: RequestWithUser, res: Response) {
+    try {
+      return res.success(
+        await this.incomingMailService.restore(req.params.agenda)
+      );
+    } catch (error) {
+      if (error instanceof ApiError) {
+        res.error(error.status, error.message);
+      } else if (error instanceof ValidationError) {
+        const errorMessages = error.details.map((err) => err.message);
+        res.error(400, errorMessages);
+      } else {
+        console.log(error);
+        res.error(500, "Internal Server Error");
+      }
+    }
+  }
+
+  async delete(req: RequestWithUser, res: Response) {
+    try {
+      return res.success(
+        await this.incomingMailService.deleteMail(req.params.agenda)
+      );
+    } catch (error) {
+      if (error instanceof ApiError) {
+        res.error(error.status, error.message);
+      } else if (error instanceof ValidationError) {
+        const errorMessages = error.details.map((err) => err.message);
+        res.error(400, errorMessages);
+      } else {
+        console.log(error);
         res.error(500, "Internal Server Error");
       }
     }

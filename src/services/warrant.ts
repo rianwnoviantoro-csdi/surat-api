@@ -113,6 +113,8 @@ export default class WarrantService {
   async detail(agenda: string): Promise<Warrant> {
     const result = await this.warrantRepository.getMailByAgenda(agenda);
 
+    if (!result) throw new ApiError(404, "Mail not found.");
+
     delete result.archiver.password;
 
     return result;

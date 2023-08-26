@@ -21,6 +21,7 @@ export interface IDisposition {
   mail?: IncomingMail;
   archiver?: User;
   deadline?: Date;
+  is_active?: boolean;
   created_at?: Date;
   updated_at?: Date;
 }

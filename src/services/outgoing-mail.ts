@@ -118,6 +118,8 @@ export default class OutgoingMailService {
   async detail(agenda: string): Promise<OutgoingMail> {
     const result = await this.outgoingMailRepository.getMailByAgenda(agenda);
 
+    if (!result) throw new ApiError(404, "Mail not found.");
+
     delete result.archiver.password;
 
     return result;

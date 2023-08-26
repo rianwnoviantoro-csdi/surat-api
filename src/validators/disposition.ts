@@ -11,4 +11,5 @@ export const createDispositionSchema = Joi.object<NewDispositionDto>({
   mail: Joi.string().allow(null, ""),
   evidence: Joi.any().meta({ swaggerType: "file" }).optional().allow(null, ""),
   archiver: Joi.string().allow(null, ""),
+  is_active: Joi.boolean().default(true),
 });
