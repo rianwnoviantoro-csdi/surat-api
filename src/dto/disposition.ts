@@ -12,3 +12,11 @@ export class NewDispositionDto {
   deadline?: Date;
   archiver?: User;
 }
+
+export class DispositionListDto {
+  uuid?: string;
+  objective?: string;
+  content?: string;
+  trait?: Trait;
+  deadline?: Date;
+}
