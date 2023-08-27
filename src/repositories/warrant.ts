@@ -7,18 +7,24 @@ import { NewMailDto } from "../dto/warrant";
 export default class WarrantRepository {
   private repository = getRepository(Warrant);
 
-  async getMailByUUID(uuid: string): Promise<Warrant | null> {
+  async getMailByUUID(
+    uuid: string,
+    active: boolean = true
+  ): Promise<Warrant | null> {
     const existingMail = await this.repository.findOne({
-      where: { uuid },
+      where: { uuid, is_active: active },
       relations: { archiver: true },
     });
 
     return existingMail;
   }
 
-  async getMailByAgenda(agenda: string): Promise<Warrant | null> {
+  async getMailByAgenda(
+    agenda: string,
+    active: boolean = true
+  ): Promise<Warrant | null> {
     const existingMail = await this.repository.findOne({
-      where: { agenda },
+      where: { agenda, is_active: active },
       relations: { archiver: true },
     });
 
@@ -55,6 +61,18 @@ export default class WarrantRepository {
     partialMail: NewMailDto
   ): Promise<Warrant> {
     const updatedMail = { ...existingMail, ...partialMail };
+    return await this.repository.save(updatedMail);
+  }
+
+  async softDelete(mail: Warrant): Promise<Warrant> {
+    const updatedMail = { ...mail, is_active: false };
+
+    return await this.repository.save(updatedMail);
+  }
+
+  async restore(mail: Warrant): Promise<Warrant> {
+    const updatedMail = { ...mail, is_active: true };
+
     return await this.repository.save(updatedMail);
   }
 

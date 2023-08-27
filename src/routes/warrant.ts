@@ -23,9 +23,26 @@ warrantRouter.post(
 );
 warrantRouter.get("/v1", UseAuth, controller.mailList.bind(controller));
 warrantRouter.get("/v1/:agenda", UseAuth, controller.detail.bind(controller));
-
-// V2
-warrantRouter.get("/v2", controller.mailList.bind(controller));
-warrantRouter.get("/v1/:agenda", controller.detail.bind(controller));
+warrantRouter.put(
+  "/v1/:agenda",
+  UseAuth,
+  multer.upload.single("evidence"),
+  controller.update.bind(controller)
+);
+warrantRouter.delete(
+  "/v1/:agenda/soft",
+  UseAuth,
+  controller.softDelete.bind(controller)
+);
+warrantRouter.delete(
+  "/v1/:agenda/hard",
+  UseAuth,
+  controller.delete.bind(controller)
+);
+warrantRouter.get(
+  "/v1/:agenda/restore",
+  UseAuth,
+  controller.restore.bind(controller)
+);
 
 export default warrantRouter;

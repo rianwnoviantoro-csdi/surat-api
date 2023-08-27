@@ -61,6 +61,7 @@ export default class WarrantService {
       startDate,
       endDate,
       agenda,
+      active,
     } = options;
 
     const skip = (pageNumber - 1) * pageSize;
@@ -78,18 +79,15 @@ export default class WarrantService {
       skip,
       take: pageSize,
       order: { [sortingField]: sortOrder || "ASC" },
-      where: {},
+      where: {
+        is_active: active,
+        agenda: ILike(`%${agenda}%`),
+      },
     };
 
     if (startDate && endDate) {
       findOptions.where = {
         mailingDate: Between(startDate, endDate),
-      };
-    }
-
-    if (agenda) {
-      findOptions.where = {
-        agenda: ILike(`%${agenda}%`),
       };
     }
 
@@ -118,5 +116,60 @@ export default class WarrantService {
     delete result.archiver.password;
 
     return result;
+  }
+
+  async update(
+    agenda: string,
+    userUUID: string,
+    body: NewMailDto,
+    evidence: any
+  ): Promise<Warrant> {
+    const mail = await this.checkExistMail(agenda);
+
+    if (mail.archiver.uuid !== userUUID) {
+      throw new ApiError(403, "Unauthorized.");
+    }
+
+    if (evidence) {
+      const document = await uploadToS3(
+        `outgoing-mails/${evidence.originalname}`,
+        evidence.buffer
+      );
+
+      body.evidence = document;
+    }
+
+    return await this.warrantRepository.updateMail(mail, body);
+  }
+
+  async softDelete(agenda: string): Promise<Warrant> {
+    const mail = await this.checkExistMail(agenda);
+
+    return await this.warrantRepository.softDelete(mail);
+  }
+
+  async restore(agenda: string): Promise<Warrant> {
+    const mail = await this.checkExistMail(agenda, false);
+
+    return await this.warrantRepository.restore(mail);
+  }
+
+  async deleteMail(agenda: string): Promise<boolean> {
+    const mail = await this.checkExistMail(agenda, false);
+
+    return await this.warrantRepository.deleteMail(mail.agenda);
+  }
+
+  async checkExistMail(
+    agenda: string,
+    active: boolean = true
+  ): Promise<Warrant> {
+    const exist = await this.warrantRepository.getMailByAgenda(agenda, active);
+
+    if (!exist) throw new ApiError(404, "Mail not found.");
+
+    delete exist.archiver.password;
+
+    return exist;
   }
 }
