@@ -7,18 +7,24 @@ import { NewMailDto } from "../dto/outgoing-mail";
 export default class OutgoingMailRepository {
   private repository = getRepository(OutgoingMail);
 
-  async getMailByUUID(uuid: string): Promise<OutgoingMail | null> {
+  async getMailByUUID(
+    uuid: string,
+    active: boolean = true
+  ): Promise<OutgoingMail | null> {
     const existingMail = await this.repository.findOne({
-      where: { uuid },
+      where: { uuid, is_active: active },
       relations: { archiver: true },
     });
 
     return existingMail;
   }
 
-  async getMailByAgenda(agenda: string): Promise<OutgoingMail | null> {
+  async getMailByAgenda(
+    agenda: string,
+    active: boolean = true
+  ): Promise<OutgoingMail | null> {
     const existingMail = await this.repository.findOne({
-      where: { agenda },
+      where: { agenda, is_active: active },
       relations: { archiver: true },
     });
 
@@ -55,6 +61,18 @@ export default class OutgoingMailRepository {
     partialMail: NewMailDto
   ): Promise<OutgoingMail> {
     const updatedMail = { ...existingMail, ...partialMail };
+    return await this.repository.save(updatedMail);
+  }
+
+  async softDelete(mail: OutgoingMail): Promise<OutgoingMail> {
+    const updatedMail = { ...mail, is_active: false };
+
+    return await this.repository.save(updatedMail);
+  }
+
+  async restore(mail: OutgoingMail): Promise<OutgoingMail> {
+    const updatedMail = { ...mail, is_active: true };
+
     return await this.repository.save(updatedMail);
   }
 
