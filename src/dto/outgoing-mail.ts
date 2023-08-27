@@ -32,6 +32,7 @@ export interface PaginationOptions {
   startDate?: string;
   endDate?: string;
   agenda?: string;
+  active?: boolean;
 }
 
 export interface PaginationInfo {

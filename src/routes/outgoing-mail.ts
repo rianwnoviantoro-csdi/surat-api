@@ -11,38 +11,42 @@ const outgingMailRouter: Router = Router();
 
 const outgoingMailRepository = new OutgoingMailRepository();
 const userRepository = new UserRepository();
-const outgoingMailservice = new OutgoingMailService(
-  outgoingMailRepository,
-  userRepository
-);
-const incomingMailcontroller = new OutgoingMailController(outgoingMailservice);
+const service = new OutgoingMailService(outgoingMailRepository, userRepository);
+const controller = new OutgoingMailController(service);
 
 // V1
 outgingMailRouter.post(
   "/v1",
   UseAuth,
   multer.upload.single("evidence"),
-  incomingMailcontroller.createMail.bind(incomingMailcontroller)
+  controller.createMail.bind(controller)
 );
-outgingMailRouter.get(
-  "/v1",
-  UseAuth,
-  incomingMailcontroller.mailList.bind(incomingMailcontroller)
-);
+outgingMailRouter.get("/v1", UseAuth, controller.mailList.bind(controller));
 outgingMailRouter.get(
   "/v1/:agenda",
   UseAuth,
-  incomingMailcontroller.detail.bind(incomingMailcontroller)
+  controller.detail.bind(controller)
 );
-
-// V2
-outgingMailRouter.get(
-  "/v2",
-  incomingMailcontroller.mailList.bind(incomingMailcontroller)
-);
-outgingMailRouter.get(
+outgingMailRouter.put(
   "/v1/:agenda",
-  incomingMailcontroller.detail.bind(incomingMailcontroller)
+  UseAuth,
+  multer.upload.single("evidence"),
+  controller.update.bind(controller)
+);
+outgingMailRouter.delete(
+  "/v1/:agenda/soft",
+  UseAuth,
+  controller.softDelete.bind(controller)
+);
+outgingMailRouter.delete(
+  "/v1/:agenda/hard",
+  UseAuth,
+  controller.delete.bind(controller)
+);
+outgingMailRouter.get(
+  "/v1/:agenda/restore",
+  UseAuth,
+  controller.restore.bind(controller)
 );
 
 export default outgingMailRouter;

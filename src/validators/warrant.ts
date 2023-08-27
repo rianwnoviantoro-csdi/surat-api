@@ -2,7 +2,7 @@ import Joi from "joi";
 
 import { NewMailDto } from "../dto/warrant";
 
-export const createOutgingMailSchema = Joi.object<NewMailDto>({
+export const createWarrantSchema = Joi.object<NewMailDto>({
   agenda: Joi.string().allow(null, ""),
   number: Joi.string().allow(null, ""),
   year: Joi.string().allow(null, ""),

@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import express, { Application } from "express";
+import express, { Application, NextFunction, Request, Response } from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -28,6 +28,10 @@ app.use("/incoming-mail", incomingMailRouter);
 app.use("/outgoing-mail", outgingMailRouter);
 app.use("/warrant", warrantRouter);
 app.use("/user", userRouter);
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.error(400, "Not found.");
+});
 
 app.listen(env.port, () => {
   console.log(`Serving on port ${env.port}`);
