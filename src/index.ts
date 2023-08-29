@@ -13,6 +13,7 @@ import incomingMailRouter from "./routes/incoming-mail";
 import userRouter from "./routes/user";
 import outgingMailRouter from "./routes/outgoing-mail";
 import warrantRouter from "./routes/warrant";
+import commonRouter from "./routes/common";
 
 const app: Application = express();
 
@@ -27,6 +28,7 @@ app.use("/auth", authRouter);
 app.use("/incoming-mail", incomingMailRouter);
 app.use("/outgoing-mail", outgingMailRouter);
 app.use("/warrant", warrantRouter);
+app.use("/common", commonRouter);
 app.use("/user", userRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
