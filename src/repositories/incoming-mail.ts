@@ -47,6 +47,10 @@ export default class IncomingMailRepository {
     return await this.repository.find();
   }
 
+  async count(): Promise<number> {
+    return await this.repository.count();
+  }
+
   async paginate(options: FindManyOptions): Promise<any> {
     return await this.repository.findAndCount(options);
   }
