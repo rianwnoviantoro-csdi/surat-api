@@ -1,9 +1,9 @@
 import { Response } from "express";
 import { ValidationError } from "joi";
 
-import ApiError from "src/configs/api-error";
-import { RequestWithUser } from "src/middlewares/auth";
-import CommonService from "src/services/common";
+import ApiError from "../configs/api-error";
+import { RequestWithUser } from "../middlewares/auth";
+import CommonService from "../services/common";
 
 export default class CommonController {
   constructor(private readonly commonService: CommonService) {}
